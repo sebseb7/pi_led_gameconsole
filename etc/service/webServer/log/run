@@ -1,0 +1,3 @@
+#!/bin/sh
+/usr/bin/chpst -u nobody /usr/bin/svlogd -tt /etc/service/webServer/log/
+

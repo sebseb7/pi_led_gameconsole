@@ -1,0 +1,49 @@
+
+2014-04-17_07:42:09.98291 Server running at http://10.10.11.10:80/
+2014-04-17_07:50:57.94265 Server running at http://10.10.11.10:80/
+2014-04-17_07:52:13.94383 
+2014-04-17_07:52:13.95151 /opt/webserver/srv.js:13
+2014-04-17_07:52:13.95787 	fs.readFile(__dirname + filename,
+2014-04-17_07:52:13.95816 	^
+2014-04-17_07:52:14.02684 ReferenceError: fs is not defined
+2014-04-17_07:52:14.02701     at Server.handler (/opt/webserver/srv.js:13:2)
+2014-04-17_07:52:14.02707     at Server.<anonymous> (/opt/webserver/node_modules/socket.io/node_modules/engine.io/lib/engine.io.js:122:22)
+2014-04-17_07:52:14.02713     at Server.<anonymous> (/opt/webserver/node_modules/socket.io/lib/index.js:251:16)
+2014-04-17_07:52:14.02719     at Server.EventEmitter.emit (events.js:98:17)
+2014-04-17_07:52:14.02725     at HTTPParser.parser.onIncoming (http.js:2108:12)
+2014-04-17_07:52:14.02730     at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:121:23)
+2014-04-17_07:52:14.02736     at Socket.socket.ondata (http.js:1966:22)
+2014-04-17_07:52:14.02741     at TCP.onread (net.js:527:27)
+2014-04-17_07:52:18.05804 Server running at http://10.10.11.10:80/
+2014-04-17_07:52:21.65281 
+2014-04-17_07:52:21.66043 /opt/webserver/srv.js:13
+2014-04-17_07:52:21.66661 	fs.readFile(__dirname + filename,
+2014-04-17_07:52:21.66690 	^
+2014-04-17_07:52:21.73623 ReferenceError: fs is not defined
+2014-04-17_07:52:21.73639     at Server.handler (/opt/webserver/srv.js:13:2)
+2014-04-17_07:52:21.73645     at Server.<anonymous> (/opt/webserver/node_modules/socket.io/node_modules/engine.io/lib/engine.io.js:122:22)
+2014-04-17_07:52:21.73652     at Server.<anonymous> (/opt/webserver/node_modules/socket.io/lib/index.js:251:16)
+2014-04-17_07:52:21.73658     at Server.EventEmitter.emit (events.js:98:17)
+2014-04-17_07:52:21.73663     at HTTPParser.parser.onIncoming (http.js:2108:12)
+2014-04-17_07:52:21.73669     at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:121:23)
+2014-04-17_07:52:21.73675     at Socket.socket.ondata (http.js:1966:22)
+2014-04-17_07:52:21.73680     at TCP.onread (net.js:527:27)
+2014-04-17_07:52:25.82726 Server running at http://10.10.11.10:80/
+2014-04-17_07:53:12.86765 Server running at http://10.10.11.10:80/
+2014-04-17_07:53:13.69313 
+2014-04-17_07:53:13.70072 /opt/webserver/srv.js:24
+2014-04-17_07:53:13.70682 		req.writeHead(200);
+2014-04-17_07:53:13.70711 		    ^
+2014-04-17_07:53:13.75991 TypeError: Object #<IncomingMessage> has no method 'writeHead'
+2014-04-17_07:53:13.76007     at /opt/webserver/srv.js:24:7
+2014-04-17_07:53:13.76013     at fs.js:268:14
+2014-04-17_07:53:13.76019     at Object.oncomplete (fs.js:107:15)
+2014-04-17_07:53:17.74510 Server running at http://10.10.11.10:80/
+2014-04-17_07:53:43.15236 Server running at http://10.10.11.10:80/
+2014-04-17_07:58:38.05062 Server running at http://10.10.11.10:80/
+2014-04-17_07:58:41.53209 socket.io conn
+2014-04-17_08:07:31.02278 socket.io conn
+2014-04-17_08:16:19.94577 socket.io conn
+2014-04-17_08:16:22.14191 socket.io conn
+2014-04-17_08:16:29.30505 socket.io conn
+2014-04-17_08:16:40.22158 socket.io conn
