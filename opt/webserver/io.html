@@ -3,11 +3,36 @@
 	</head>
 
 	<body>
-		hiho
-
+		<div id="message1">init</div>
+		<div id="message2"></div>
+		<div id="message3"></div>
+		<div id="message4"></div>
+		
 		<script src="/socket.io/socket.io.js"></script>
 
-		<script>var socket = io.connect("/");</script>
+		<script>
+			var socket = io.connect("/");
+				
+			socket.on('disconnect', function () {
+				
+				document.getElementById('message1').innerHTML = 'disconnected';
+				document.getElementById('message2').innerHTML = '';
+				
+			});
+
+			socket.on('connect', function (transport) {
+				
+				document.getElementById('message1').innerHTML = 'connected';
+				
+			});
+			socket.on('player', function (data) {
+				
+				document.getElementById('message2').innerHTML = 'Player '+data;
+
+
+				
+			});
+		</script>
 
 	</body>
 
