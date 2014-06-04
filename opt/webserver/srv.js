@@ -5,8 +5,8 @@ var httpServer = require('http').createServer(handler);
 
 var io = require('socket.io').listen(httpServer);
 
-//httpServer.listen(8000,'127.0.0.1');
-httpServer.listen(80,'10.10.11.10');
+httpServer.listen(8000,'127.0.0.1');
+//httpServer.listen(80,'10.10.11.10');
 
 //io.enable('browser client minification');
 //io.enable('browser client etag');
