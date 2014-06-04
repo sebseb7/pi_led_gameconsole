@@ -4,9 +4,18 @@ var path = require('path');
 var httpServer = require('http').createServer(handler);
 
 var io = require('socket.io').listen(httpServer);
+var net = require('net');
+var client = new net.Socket();
 
-httpServer.listen(8000,'127.0.0.1');
+client.connect(2020,'127.0.0.1', function() {
+
+		console.log('CONNECTED');
+});
+
+httpServer.listen(8000,'0.0.0.0');
+//httpServer.listen(8000,'192.168.2.1');
 //httpServer.listen(80,'10.10.11.10');
+
 
 //io.enable('browser client minification');
 //io.enable('browser client etag');
@@ -40,11 +49,17 @@ function handler (req,res) {
 
 
 var players = [];
+var keys = [];
 
 
 players[0]=0;
 players[1]=0;
 players[2]=0;
+
+keys[0]=0;
+keys[1]=0;
+keys[2]=0;
+
 
 
 io.sockets.on('connection', function (socket) {
@@ -59,13 +74,31 @@ io.sockets.on('connection', function (socket) {
 		{
 			players[socket.playernumber-1]=0;
 		}
+		
+		client.write(
+		
+			String.fromCharCode(keys[0]+players[0]*16)+
+			String.fromCharCode(keys[1]+players[1]*16)+
+			String.fromCharCode(keys[2]+players[2]*16))
+		
+		;
 
 	});
 
 	socket.on('keys', function (data) {
 
-		console.log(data);
+		console.log(socket.playernumber+':'+data);
+		keys[socket.playernumber-1]=data;
 
+
+
+		client.write(
+		
+			String.fromCharCode(keys[0]+players[0]*16)+
+			String.fromCharCode(keys[1]+players[1]*16)+
+			String.fromCharCode(keys[2]+players[2]*16))
+		
+		;
 	});
 
 
@@ -90,6 +123,14 @@ io.sockets.on('connection', function (socket) {
 
 
 	socket.playernumber = myPlayer;
+		
+		client.write(
+		
+			String.fromCharCode(keys[0]+players[0]*16)+
+			String.fromCharCode(keys[1]+players[1]*16)+
+			String.fromCharCode(keys[2]+players[2]*16))
+		
+		;
 
 	socket.emit('player',myPlayer);
 });
