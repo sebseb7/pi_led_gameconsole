@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 var fs = require('fs');
-
+var path = require('path');
 var httpServer = require('http').createServer(handler);
 
 var io = require('socket.io').listen(httpServer);
@@ -21,9 +21,9 @@ httpServer.listen(8000,'127.0.0.1');
 
 function handler (req,res) {
 
-	var filename = '/io.html';
+	var filename = path.basename(req.url) || 'io.html';
 
-	fs.readFile(__dirname + filename,
+	fs.readFile(__dirname + '/' +  filename,
 
 	function (err,data) {
 	
@@ -59,6 +59,12 @@ io.sockets.on('connection', function (socket) {
 		{
 			players[socket.playernumber-1]=0;
 		}
+
+	});
+
+	socket.on('keys', function (data) {
+
+		console.log(data);
 
 	});
 
