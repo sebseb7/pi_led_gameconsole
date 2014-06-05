@@ -28,11 +28,25 @@ httpServer.listen(8000,'0.0.0.0');
 ]);
 */
 
+var switchto3=0;
+var switchto12=0;
+
 function handler (req,res) {
 
 	var filename = path.basename(req.url) || 'io.html';
+	
+	if(filename == '3')
+	{
+		switchto3 = 1;
+	};
+	if(filename == '3')
+	{
+		switchto12 = 1;
+	};
 
 	fs.readFile(__dirname + '/' +  filename,
+
+
 
 	function (err,data) {
 	
