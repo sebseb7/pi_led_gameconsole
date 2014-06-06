@@ -99,9 +99,14 @@ io.sockets.on('connection', function (socket) {
 
 	});
 
+	socket.on('name', function (data) {
+		//console.log(data);
+		client.write('NAME'+socket.playernumber+data+'@');
+	});
+	
 	socket.on('keys', function (data) {
 
-		console.log(socket.playernumber+':'+data);
+		//console.log(socket.playernumber+':'+data);
 		keys[socket.playernumber-1]=data;
 
 

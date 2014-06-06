@@ -11,8 +11,13 @@
 				<h3 id="message1"></h3>
 				<h1 id="message2"></h1>
 			</div>
-			<div role="main" class="ui-content">
-				
+			<div role="main" id="error_full" style="display:none" class="ui-content">
+				<h1>alle Spielfelder belegt</h1>
+			</div>
+			<div role="main" id="buttongrid" style="display:none" class="ui-content">
+			
+				<input type="text" class="defaultText" id="playername" maxlength="14" value="" title="<name hier eingeben>"/>
+
 				<div class="ui-grid-b">
 					<div class="ui-block-a"></div>
 					<div class="ui-block-b"><button type="button" id="rotate"><br/><br/>Rotate<br/><br/><br/></button></div>
@@ -32,6 +37,32 @@
 		<script>
 			$.mobile.ajaxEnabled=false;
 
+
+
+			$(document).ready(function()
+					{
+					$("#playername").focus(function(srcc)
+						{
+						if ($(this).val() == $(this)[0].title)
+						{
+						$(this).removeClass("defaultTextActive");
+						$(this).val("");
+						}
+						});
+
+					$("#playername").blur(function()
+						{
+						if ($(this).val() == "")
+						{
+						$(this).addClass("defaultTextActive");
+						$(this).val($(this)[0].title);
+						}
+						});
+
+					$(".defaultText").blur();        
+					});
+
+
 			var socket = io.connect("/");
 
 			var rotate=0;
@@ -40,103 +71,133 @@
 			var drop=0;
 			var connected=0;
 			var player=0;
-				
+													
+			$("#playername").val(readCookie('name'));
+
 			socket.on('disconnect', function () {
-				
-				document.getElementById('message1').innerHTML = 'disconnected';
-				document.getElementById('message2').innerHTML = '';
-				connected=0;
-				
-			});
 
-			socket.on('connect', function (transport) {
-				
-				document.getElementById('message1').innerHTML = 'connected';
-				connected=1;
-				
-			});
-			socket.on('player', function (data) {
-				
-				document.getElementById('message2').innerHTML = 'Player '+data;
-				player=data;
+					document.getElementById('message1').innerHTML = 'disconnected';
+					document.getElementById('message2').innerHTML = '';
+					connected=0;
+		$('#buttongrid').css('display','none');
+			$('#error_full').css('display','none');
 
-			function updatekeys()
-			{
-				if(connected)
-				{
-					if(player > 0)
-					{
-						socket.emit('keys',rotate+left*2+right*4+drop*8);
-					}
-					
-				}
-			}
+					});
 
-			$( document ).on( "vmousedown", "#rotate", function() {
+socket.on('connect', function (transport) {
+
+		document.getElementById('message1').innerHTML = 'connected';
+		connected=1;
+		
+		if($("#playername").val() != $("#playername")[0].title)
+		{
+			socket.emit('name',$("#playername").val());
+		}else
+		{
+			socket.emit('name','');
+		}
+
+		});
+socket.on('player', function (data) {
+
+		document.getElementById('message2').innerHTML = 'Player '+data;
+		player=data;
+
+		function updatekeys()
+		{
+		if(connected)
+		{
+		if(player > 0)
+		{
+		socket.emit('keys',rotate+left*2+right*4+drop*8);
+		}
+
+		}
+		}
+
+		$( "#playername" ).change(function() {
+			socket.emit('name',this.value);
+			createCookie('name', this.value, 200);
+		});
+
+		if(player>0)
+		{
+			socket.emit('keys',rotate+left*2+right*4+drop*8);
+		$('#buttongrid').css('display','block');
+			$('#error_full').css('display','none');
+		}
+		else
+		{
+		$('#buttongrid').css('display','none');
+			$('#error_full').css('display','block');
+		}
+
+
+		$( document ).on( "vmousedown", "#rotate", function() {
 				if(! rotate)
 				{
-					rotate=1;
-					updatekeys();
+				rotate=1;
+				updatekeys();
 				}
-			});
-			$( document ).on( "vmouseup vmouseout", "#rotate", function() {
+				});
+		$( document ).on( "vmouseup vmouseout", "#rotate", function() {
 				if(rotate)
 				{
-					rotate=0;
-					updatekeys();
+				rotate=0;
+				updatekeys();
 				}
-			});
+				});
 
-			$( document ).on( "vmousedown", "#left", function() {
+		$( document ).on( "vmousedown", "#left", function() {
 				if(! left)
 				{
-					left=1;
-					updatekeys();
+				left=1;
+				updatekeys();
 				}
-			});
-			$( document ).on( "vmouseup vmouseout", "#left", function() {
+				});
+		$( document ).on( "vmouseup vmouseout", "#left", function() {
 				if(left)
 				{
-					left=0;
-					updatekeys();
+				left=0;
+				updatekeys();
 				}
-			});
+				});
 
-			$( document ).on( "vmousedown", "#right", function() {
+		$( document ).on( "vmousedown", "#right", function() {
 				if(! right)
 				{
-					right=1;
-					updatekeys();
+				right=1;
+				updatekeys();
 				}
-			});
-			$( document ).on( "vmouseup vmouseout", "#right", function() {
+				});
+		$( document ).on( "vmouseup vmouseout", "#right", function() {
 				if(right)
 				{
-					right=0;
-					updatekeys();
+				right=0;
+				updatekeys();
 				}
-			});
+				});
 
-			$( document ).on( "vmousedown", "#drop", function() {
+		$( document ).on( "vmousedown", "#drop", function() {
 				if(! drop)
 				{
-					drop=1;
-					updatekeys();
+				drop=1;
+				updatekeys();
 				}
-			});
-			$( document ).on( "vmouseup vmouseout", "#drop", function() {
+				});
+		$( document ).on( "vmouseup vmouseout", "#drop", function() {
 				if(drop)
 				{
-					drop=0;
-					updatekeys();
+				drop=0;
+				updatekeys();
 				}
-			});
+				});
 
-				
-			});
-		</script>
 
-	</body>
+});
+</script>
+
+</body>
 
 </html>
 
