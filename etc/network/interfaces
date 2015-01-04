@@ -5,17 +5,17 @@ iface eth0 inet dhcp
 
 auto eth0:1
 iface eth0:1 inet static
-    address 10.10.10.10
-    netmask 255.255.255.0
-
-#allow-hotplug wlan0
-#iface wlan0 inet manual
-#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
-#iface default inet dhcp
-
+address 10.10.10.10
+netmask 255.255.255.0
 
 iface wlan0 inet static
- address 10.10.11.10
- netmask 255.255.255.0
-
+address 10.10.11.10
+netmask 255.255.255.0
+	up /sbin/iptables -F
+	up /sbin/iptables -X
+	up /sbin/iptables -t nat -F
+	up iptables -A FORWARD -o eth0 -i wlan0 -s 10.10.11.0/24 -m conntrack --ctstate NEW -j ACCEPT
+	up iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+	up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE 
+	up sysctl -w net.ipv4.ip_forward=1
 
